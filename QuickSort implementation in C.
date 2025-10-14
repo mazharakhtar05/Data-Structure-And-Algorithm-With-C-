@@ -1,0 +1,120 @@
+// ----------------------------------------------------------
+// Title: QuickSort Algorithm in C
+// Author: Mazhar Akhtar Ansari
+// Description:
+//     This program demonstrates the implementation of the
+//     QuickSort algorithm — a divide-and-conquer sorting method.
+//     It sorts an integer array in ascending order.
+//
+// How QuickSort Works:
+//     1. Choose a pivot element from the array.
+//     2. Partition the array so that elements smaller than the pivot
+//        are on its left, and greater elements are on its right.
+//     3. Recursively apply the above steps to both partitions.
+// ----------------------------------------------------------
+
+#include <stdio.h>
+
+// Function prototype declaration
+int partition(int arr[], int startIndex, int endIndex);
+void quickSort(int arr[], int startIndex, int endIndex);
+void printArray(int arr[], int size);
+
+// ----------------------------------------------------------
+// quickSort()
+// Recursively sorts the array using the QuickSort algorithm.
+// ----------------------------------------------------------
+void quickSort(int arr[], int startIndex, int endIndex) {
+    // Base condition: if the sub-array has 1 or 0 elements, it's already sorted
+    if (startIndex >= endIndex) {
+        return;
+    }
+
+    // Partition the array and get the pivot index
+    int pivotIndex = partition(arr, startIndex, endIndex);
+
+    // Recursively sort the two halves around the pivot
+    quickSort(arr, startIndex, pivotIndex - 1);
+    quickSort(arr, pivotIndex + 1, endIndex);
+}
+
+// ----------------------------------------------------------
+// partition()
+// Places the pivot element at its correct sorted position and
+// arranges all smaller elements to its left and larger to its right.
+// ----------------------------------------------------------
+int partition(int arr[], int startIndex, int endIndex) {
+    int pivot = arr[startIndex]; // choosing first element as pivot
+    int count = 0;
+
+    // Count how many elements are smaller or equal to the pivot
+    for (int i = startIndex + 1; i <= endIndex; i++) {
+        if (arr[i] <= pivot) {
+            count++;
+        }
+    }
+
+    // Find the correct index for the pivot
+    int pivotIndex = startIndex + count;
+
+    // Place pivot at its correct position by swapping
+    int temp = arr[pivotIndex];
+    arr[pivotIndex] = arr[startIndex];
+    arr[startIndex] = temp;
+
+    // Reorder elements around pivot
+    int i = startIndex, j = endIndex;
+    while (i < pivotIndex && j > pivotIndex) {
+        // Move i forward until an element greater than pivot is found
+        while (arr[i] < pivot) {
+            i++;
+        }
+
+        // Move j backward until an element smaller than pivot is found
+        while (arr[j] > pivot) {
+            j--;
+        }
+
+        // Swap elements to correct sides
+        if (i < pivotIndex && j > pivotIndex) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    // Return pivot's final position
+    return pivotIndex;
+}
+
+// ----------------------------------------------------------
+// printArray()
+// Prints the elements of an integer array.
+// ----------------------------------------------------------
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// ----------------------------------------------------------
+// main()
+// Entry point of the program.
+// ----------------------------------------------------------
+int main() {
+    int arr[] = {1, 5, 4, 3, 2};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array: ");
+    printArray(arr, size);
+
+    quickSort(arr, 0, size - 1);
+
+    printf("Sorted array:   ");
+    printArray(arr, size);
+
+    return 0;
+}
