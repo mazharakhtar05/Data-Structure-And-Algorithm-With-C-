@@ -1,0 +1,34 @@
+'''
+🧠 Problem Statement
+
+Given an array, check whether it is sorted (in ascending order) and then rotated any number of times.
+If yes, return true; otherwise, return false.
+
+✨ Example
+Input: arr = [3, 4, 5, 1, 2]
+Output: true
+
+Input: arr = [2, 1, 3, 4]
+Output: false
+
+'''
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool checkSortedAndRotated(vector<int>& nums) {
+    int count = 0;
+    int n = nums.size();
+    for(int i = 0; i < n; i++) {
+        if(nums[i] > nums[(i + 1) % n])
+            count++;
+    }
+    return count <= 1;
+}
+
+int main() {
+    vector<int> nums = {3, 4, 5, 1, 2};
+    cout << (checkSortedAndRotated(nums) ? "true" : "false") << endl;
+    return 0;
+}
