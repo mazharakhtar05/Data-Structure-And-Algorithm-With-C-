@@ -1,0 +1,31 @@
+'''
+🧠 Problem Statement
+
+Given an array of size n, find the element that appears more than n/2 times (the majority element).
+You may assume that the array is non-empty and the majority element always exists.
+
+✨ Example
+Input: nums = [2, 2, 1, 1, 1, 2, 2]
+Output: 2
+
+'''
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int majorityElement(vector<int>& nums) {
+    int count = 0, candidate = 0;
+    for(int num : nums) {
+        if(count == 0)
+            candidate = num;
+        count += (num == candidate) ? 1 : -1;
+    }
+    return candidate;
+}
+
+int main() {
+    vector<int> nums = {2, 2, 1, 1, 1, 2, 2};
+    cout << "Majority element: " << majorityElement(nums) << endl;
+    return 0;
+}
