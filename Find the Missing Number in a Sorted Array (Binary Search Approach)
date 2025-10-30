@@ -1,0 +1,33 @@
+'''
+🧠 Problem Statement
+
+You are given a sorted array containing n distinct numbers taken from 0 to n.
+Find the missing number using binary search for better efficiency.
+
+✨ Example
+Input: nums = [0, 1, 2, 4, 5, 6]
+Output: 3
+
+'''
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int missingNumber(vector<int>& nums) {
+    int left = 0, right = nums.size() - 1;
+    while(left <= right) {
+        int mid = left + (right - left) / 2;
+        if(nums[mid] == mid)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return left;
+}
+
+int main() {
+    vector<int> nums = {0, 1, 2, 4, 5, 6};
+    cout << "Missing number: " << missingNumber(nums) << endl;
+    return 0;
+}
