@@ -1,0 +1,45 @@
+*/
+Problem:
+Given an array of positive integers and an integer target, find all continuous subarrays that sum up to the given target.
+
+Example:
+
+Input: arr = [1, 2, 3, 4, 5], target = 9  
+Output: [2, 3, 4] and [4, 5]
+Explanation: The subarrays [2,3,4] and [4,5] have a sum of 9.
+
+/*
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void subarraySum(vector<int>& arr, int target) {
+    int left = 0, right = 0, sum = 0;
+    int n = arr.size();
+
+    while (right < n) {
+        sum += arr[right];
+
+        while (sum > target && left <= right) {
+            sum -= arr[left];
+            left++;
+        }
+
+        if (sum == target) {
+            cout << "Subarray found: ";
+            for (int i = left; i <= right; i++)
+                cout << arr[i] << " ";
+            cout << endl;
+        }
+
+        right++;
+    }
+}
+
+int main() {
+    vector<int> arr = {1, 2, 3, 4, 5};
+    int target = 9;
+    subarraySum(arr, target);
+    return 0;
+}
